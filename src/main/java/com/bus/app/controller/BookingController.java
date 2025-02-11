@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/booking")
 public class BookingController {
@@ -28,8 +27,7 @@ public class BookingController {
                                   @RequestBody final BookingDTO bookingDTO) {
         final String token = authorizationHeader.substring(7);
         final String userId = jwtUtil.extractUserId(token);
-        System.err.println("after extract userId in create booking  userId  :" + userId);
-        return this.bookingService.bookTicket(userId, bookingDTO.getPickupPoint(), bookingDTO.getDestinationPoint(), String.valueOf(bookingDTO.getPickupTime()), bookingDTO.getBusNumber(), bookingDTO.getBusType(), bookingDTO.getBookedSeats(), bookingDTO.getPerSeatAmount(), bookingDTO.getTotalAmount());
+        return this.bookingService.bookTicket(bookingDTO.getUserId(), bookingDTO.getPickupPoint(), bookingDTO.getDestinationPoint(), String.valueOf(bookingDTO.getPickupTime()), bookingDTO.getBusNumber(), bookingDTO.getBusType(), bookingDTO.getBookedSeats(), bookingDTO.getPerSeatAmount(), bookingDTO.getTotalAmount());
     }
 
     @DeleteMapping("/cancel")
@@ -61,6 +59,13 @@ public class BookingController {
 
         return this.bookingService.modifyBooking(authorizationHeader, pickupPoint, destinationPoint, pickupTime, busNumber, busType, bookedSeats, perSeatAmount, totalAmount);
     }
+
+    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/seat/available")
+    public ResponseDTO checkAvailableSeats(@RequestParam final Long busNumber) {
+        return this.bookingService.checkAvailableSeats(busNumber);
+    }
+
 
     @GetMapping("/retrieve")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

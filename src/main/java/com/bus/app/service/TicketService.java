@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("unused")
 @Service
 public class TicketService {
 
@@ -34,8 +33,6 @@ public class TicketService {
                     .userId(userId)
                     .ticketId(ticketId)
                     .ticketUrl(ticketUrl)
-                    .createdBy(userId)
-                    .updatedBy(userId)
                     .build();
             return ResponseDTO.builder()
                     .message(Constants.CREATED)

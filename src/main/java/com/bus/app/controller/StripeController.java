@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/stripe-payment")
 public class StripeController {

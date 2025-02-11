@@ -12,13 +12,11 @@ import com.bus.app.util.JwtUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 @Service
 public class BookingService {
 
@@ -56,13 +54,14 @@ public class BookingService {
         return bookingDetails;
     }
 
-    public ResponseDTO bookTicket(final String userId, final String pickupPoint,
+    public ResponseDTO bookTicket(final String token, final String pickupPoint,
                                   final String destinationPoint, final String pickupTime,
                                   final Long busNumber, final String busType,
                                   final List<Long> bookedSeats, final Long perSeatAmount, final Long totalAmount) {
 
         final TripDTO trip = this.tripServiceClient.fetchTripId(pickupPoint, destinationPoint, pickupTime);
         final BusDTO bus = this.busServiceWebClient.fetchBusDetail(busNumber);
+        final String userId = jwtUtil.extractUserId(token);
         final String customer = customerServiceWebClient.fetchCustomerIdByUserId(userId);
 
         final List<Booking> newBookings = new ArrayList<>();
@@ -74,8 +73,6 @@ public class BookingService {
                     .perSeatAmount(perSeatAmount)
                     .bookedSeats(List.of(seatNumber))
                     .totalPrice(totalAmount)
-                    .createdBy(customer)
-                    .updatedBy(customer)
                     .build();
             newBookings.add(booking);
         }
@@ -124,6 +121,16 @@ public class BookingService {
         return ResponseDTO.builder()
                 .message(Constants.UPDATED)
                 .data(this.bookingRepository.save(booking))
+                .statusCode(200)
+                .build();
+    }
+
+    public ResponseDTO checkAvailableSeats(final Long busNumber) {
+        final BusDTO bus = busServiceWebClient.fetchBusDetail(busNumber);
+        final List<Booking> booking = bookingRepository.findByBusNumber(bus.getNumber());
+        return ResponseDTO.builder()
+                .message(Constants.RETRIEVED)
+                .data(booking)
                 .statusCode(200)
                 .build();
     }

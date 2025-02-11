@@ -22,6 +22,7 @@ public class BookingDTO {
     private List<Long> bookedSeats;
     private Long perSeatAmount;
     private Long totalAmount;
+    private String userId;
 
 
 }

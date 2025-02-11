@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/passenger")
 public class PassengerDetailController {
@@ -23,13 +22,13 @@ public class PassengerDetailController {
     }
 
     @PostMapping("/create")
-    public ResponseDTO createPassenger(@RequestHeader("Authorization") final String authorizationHeader,
-                                       @RequestBody final List<PassengerDetailDTO> passengers,
-                                       @RequestParam final String email,
-                                       @RequestParam final Long phoneNumber) {
+    public ResponseDTO registerPassengers(@RequestHeader("Authorization") final String authorizationHeader,
+                                          @RequestBody final List<PassengerDetailDTO> passengers,
+                                          @RequestParam final String email,
+                                          @RequestParam final Long phoneNumber) {
         final String token = authorizationHeader.substring(7);
         final String userId = jwtUtil.extractUserId(token);
-        return this.passengerDetailsService.createPassenger(userId, passengers, email, phoneNumber
+        return this.passengerDetailsService.registerPassengers(userId, passengers, email, phoneNumber
         );
     }
 

@@ -27,7 +27,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     public void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
             throws ServletException, IOException {
-
         final String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer")) {
             final String token = authHeader.substring(7);
@@ -36,7 +35,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 final String email = claims.get("userEmail", String.class);
                 final String role = claims.get("role", String.class);
                 if (email != null && role != null) {
-                    final List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
+                    List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
                     final UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(email, null, authorities);
                     SecurityContextHolder.getContext().setAuthentication(authentication);

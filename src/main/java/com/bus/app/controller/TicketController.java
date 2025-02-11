@@ -6,7 +6,6 @@ import com.bus.app.util.JwtUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/ticket")
 public class TicketController {
@@ -21,11 +20,9 @@ public class TicketController {
 
 
     @PostMapping("/create")
-    public ResponseDTO createTicket(@RequestHeader("Authorization") final String authorizationHeader,
+    public ResponseDTO createTicket(@RequestParam final String userId,
                                     @RequestParam final String ticketId,
                                     @RequestParam final String ticketUrl) {
-        final String token = authorizationHeader.substring(7);
-        final String userId = jwtUtil.extractUserId(token);
         return this.ticketService.createTicket(userId, ticketId, ticketUrl);
     }
 

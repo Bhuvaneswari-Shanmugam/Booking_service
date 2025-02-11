@@ -33,8 +33,6 @@ public class SecurityConfig {
                         .requestMatchers("passenger/user/{userId}").permitAll()
                         .requestMatchers("passenger/create").permitAll()
                         .requestMatchers("passenger/retrieve").permitAll()
-                        .requestMatchers("ticket/create").permitAll()
-                        .requestMatchers("ticket/retrieve").permitAll()
                         .requestMatchers("/booking/retrieve").hasRole("ADMIN")
                         .requestMatchers("passenger/retrieve/all-passenger").hasRole("ADMIN")
                         .requestMatchers("ticket/retrieve/all-ticket").hasRole("ADMIN")

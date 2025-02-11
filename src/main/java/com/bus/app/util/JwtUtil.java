@@ -19,7 +19,6 @@ public class JwtUtil {
     private String JWT_SECRET;
 
     public String extractUserId(final String token) {
-        System.out.println("token extract "+token);
         try {
             final Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET);
             return JWT.require(algorithm).build().verify(token).getClaim("userId").asString();
