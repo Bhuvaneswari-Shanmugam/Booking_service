@@ -25,16 +25,31 @@ public class BusServiceWebClient {
                     .retrieve()
                     .bodyToMono(BusDTO.class)
                     .block();
-
             if (busDTO == null || busDTO.getId() == null) {
                 throw new BadRequestServiceAlertException(Constants.NOT_FOUND);
             }
-
             return busDTO;
         } catch (Exception e) {
             throw new ServiceRequestException(Constants.FETCH_ERROR);
-
         }
     }
 
+    public Long retrieveBusCapacity(final Long busNumber) {
+        try {
+            final BusDTO busDTO = webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/bus/find-bus")
+                            .queryParam("busNumber", busNumber)
+                            .build())
+                    .retrieve()
+                    .bodyToMono(BusDTO.class)
+                    .block();
+            if (busDTO == null || busDTO.getId() == null) {
+                throw new BadRequestServiceAlertException(Constants.NOT_FOUND);
+            }
+            return busDTO.getCapacity();
+        } catch (Exception e) {
+            throw new ServiceRequestException(Constants.FETCH_ERROR);
+        }
+    }
 }

@@ -15,6 +15,6 @@ public class PassengerDetailDTO {
     private String lastName;
     private Long age;
     private String gender;
-    private String userId;
+    private Long seatNumber;
 
 }

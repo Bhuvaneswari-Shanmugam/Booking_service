@@ -6,11 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.Instant;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
@@ -33,18 +32,26 @@ public class Booking {
     @Column(name = "user_id", nullable = false)
     private String userId;
 
-    @CurrentTimestamp
-    @Column(name = "booking_date_time", nullable = false)
-    private Date bookingDateTime;
+    @Column(name = "trip_date", nullable = false)
+    private Instant tripDate;
 
-    @Column(name = "booked_seats", nullable = false)
-    private List<Long> bookedSeats;
+    @Column(name = "booked_seat", nullable = false)
+    private Long bookedSeat;
 
     @Column(name = "per_seat_amount", nullable = false)
     private Long perSeatAmount;
 
     @Column(name = "total_price", nullable = false)
     private Long totalPrice;
+
+    @Column(name = "ticketId", nullable = false)
+    private String ticketId;
+
+    @Column(name = "pickup_stop" )
+    private String pickupStop;
+
+    @Column(name = "dropping_stop" )
+    private String droppingStop;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -59,5 +66,7 @@ public class Booking {
 
     @Column(name = "updated_by")
     private String updatedBy;
+
+
 
 }

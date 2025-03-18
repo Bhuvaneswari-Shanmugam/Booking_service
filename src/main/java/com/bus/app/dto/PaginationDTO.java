@@ -6,13 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class CustomerDTO {
+public class PaginationDTO {
 
-    private String firstName;
-    private String lastName;
-    private String email;
-
+    private int page = 0;
+    private int size = 10;
+    private String sortBy = "id";
+    private String direction = "ASC";
 }

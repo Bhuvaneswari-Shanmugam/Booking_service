@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,11 +19,11 @@ public class BookingDTO {
     private String pickupTime;
     private Long busNumber;
     private String busType;
-    private String bookingStatus;
-    private List<Long> bookedSeats;
+    private List<Long> bookedSeats ;
     private Long perSeatAmount;
     private Long totalAmount;
-    private String userId;
-
+    private String ticketId;
+    private String pickupStop;
+    private  String droppingStop;
 
 }
